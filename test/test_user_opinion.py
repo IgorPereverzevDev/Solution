@@ -31,3 +31,7 @@ class TestUser_opinion(unittest.TestCase):
     def test_formatting_time(self):
         result = formatting_time(self.values[0][0], self.values[0][1])
         assert_equal(self.expected_value_formatting_date, result)
+
+
+if __name__ == '__main__':
+    unittest.main()
