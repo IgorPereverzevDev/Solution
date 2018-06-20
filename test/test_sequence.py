@@ -2,7 +2,7 @@ import unittest
 
 from nose.tools import assert_equal
 
-from task.algorithmic_task import sequence, is_prime
+from sequence.algorithmic_task import sequence, is_prime
 
 
 class TestSequence(unittest.TestCase):
