@@ -1,0 +1,5 @@
+DAY = 1
+MIN = 30
+LIMIT_SESSION = 6
+TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
+DAY_DURATION = 3
