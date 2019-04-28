@@ -32,25 +32,25 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.stats import t
+from scipy.stats import gamma
 import scipy.stats as sts
 
 # Выбор параметров для распределения
 k = 10
 
 # Сгенерируйте из него выборку объёма 1000
-sample_range = t.rvs(k, size=1000)
+sample_range = gamma.rvs(k, size=1000)
 
 # Постройте гистограмму выборки и нарисуйте поверх неё теоретическую плотность распределения вашей случайной величины.
-plt.hist(sample_range, density=True, bins=20, alpha=0.5, label='samples Student')
+plt.hist(sample_range, density=True, bins=20, alpha=0.5, label='samples gamma')
 plt.ylabel('number of samples')
 plt.xlabel('$x$')
 
 # теоретическая плотность распределения случайной величины
-left = t.ppf(0.01, k)
-right = t.ppf(0.99, k)
+left = gamma.ppf(0.01, k)
+right = gamma.ppf(0.99, k)
 x = np.linspace(left, right, 1000)
-plt.plot(x, t.pdf(x, k), 'r-', lw=5, alpha=0.7, label='student pdf')
+plt.plot(x, gamma.pdf(x, k), 'r-', lw=5, alpha=0.7, label='erlang pdf')
 plt.legend(loc='upper right')
 plt.show()
 
@@ -59,10 +59,10 @@ plt.show()
 # и плотности соответствующего нормального распределения
 # size_samples - выбороки объёма n
 
-def student_func(size_samples, Ex, Dx):
+def gamma_func(size_samples, Ex, Dx):
     n = size_samples
     # генерация выборок
-    values = np.array([t.rvs(k, size=n) for x in range(1000)])
+    values = np.array([gamma.rvs(k, size=n) for x in range(1000)])
     # вычисление выборочных средних
     mean_val = values.mean(axis=1)
     plt.hist(mean_val, density=True, alpha=0.5, label='hist mean n ' + str(n))
@@ -73,9 +73,9 @@ def student_func(size_samples, Ex, Dx):
     print('sigma=', sigma)
     # зададим нормальное распределенние
     norm_rv = sts.norm(loc=Ex, scale=sigma)
-    x = np.linspace(0.5, 2, 100)
+    x = np.linspace(6, 14, 100)
     pdf = norm_rv.pdf(x)
-    plt.plot(x, pdf, 'r-', lw=3, alpha=0.7, label='student pdf n ' + str(n))
+    plt.plot(x, pdf, 'r-', lw=3, alpha=0.7, label='erlang pdf n ' + str(n))
     plt.ylabel('samples')
     plt.xlabel('$x$')
     plt.legend(loc='upper right')
@@ -83,15 +83,15 @@ def student_func(size_samples, Ex, Dx):
 
 
 # Вычисление теоритических EX, std, DX  распределения
-EX = t.mean(k)
-std = t.std(k)
+EX = gamma.mean(k)
+std = gamma.std(k)
 DX = std ** 2
 print('Ex=', EX, ' STD=', std, ' DX=', DX)
 
-student_func(5, EX, DX)
-student_func(10, EX, DX)
-student_func(50, EX, DX)
+gamma_func(5, EX, DX)
+gamma_func(10, EX, DX)
+gamma_func(50, EX, DX)
 
 # ## Вывод:
-# Распределение выборочных средних для функции student хорошо описывается нормальным распределением.
+# Распределение выборочных средних для функции gamma хорошо описывается нормальным распределением.
 # С ростом n точность аппроксимации увеличивается.
