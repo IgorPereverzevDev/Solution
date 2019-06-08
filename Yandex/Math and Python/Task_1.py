@@ -1,5 +1,5 @@
 import re
-
+import pybrain
 import numpy as np
 import pylab
 import scipy.spatial.distance
@@ -65,6 +65,7 @@ for i in range(n):
 # Само предложение (In comparison to dogs, cats have not undergone... ) имеет индекс 0.
 dictOfWords = {i: scipy.spatial.distance.cosine(word_matrix[0], word_matrix[i]) for i in range(0, n)}
 s = [x[0] for x in sorted(dictOfWords.items(), key=lambda x: x[1], reverse=False)]
+
 
 with open('submission-1.txt', 'a') as file:
     file.write(str(s[1]) + " " + str(s[2]))
